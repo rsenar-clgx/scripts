@@ -7,11 +7,11 @@ URL_DBT_PROJECT="git@github.com:rsenar-clgx/ce-std-repo-test.git"
 # =====================================
 # Auto Increment Git Tag
 # =====================================
-if [ $TIER = "dev" ]; then
+if [ $TIER == "dev" ]; then
+    echo "======================================"
+    echo " triggering auto_increment_tag script "
+    echo "======================================"
     DBT_PROJECT=$(echo "$URL_DBT_PROJECT" | cut -d'/' -f2 | cut -d'.' -f1)
-    echo "============================================"
-    echo "=== triggering auto_increment_tag script ==="
-    echo "============================================"
     echo "=== auto increment tag for [$URL_DBT_PROJECT] in [$TIER] environment"
     rm -rf /tmp/$DBT_PROJECT
     git clone --branch $TIER $URL_DBT_PROJECT /tmp/$DBT_PROJECT
@@ -35,16 +35,16 @@ if [ $TIER = "dev" ]; then
     PATCH=`git log --format=%B -n 1 HEAD | grep 'fix:'`
 
     if [ "$MAJOR" ]; then
-        echo "Update MAJOR version"
+        # echo "Update MAJOR version"
         VNUM1=$((VNUM1+1))
         VNUM2=0
         VNUM3=0
     elif [ "$MINOR" ]; then
-        echo "Update MINOR version"
+        # echo "Update MINOR version"
         VNUM2=$((VNUM2+1))
         VNUM3=0
     elif [ "$PATCH" ]; then
-        echo "Update PATCH version"
+        # echo "Update PATCH version"
         VNUM3=$((VNUM3+1))
     fi
 
@@ -65,11 +65,10 @@ if [ $TIER = "dev" ]; then
     # only tag if no tag already (would be better if the git describe command above could have a silent option)
     if [ -z "$NEEDS_TAG" ]; then
         echo "=== updating from [$VERSION] to [$NEW_TAG] in [$TIER] environment (Ignoring fatal:cannot describe - this means commit is untagged)"
-        # echo "=== tagged with $NEW_TAG (Ignoring fatal:cannot describe - this means commit is untagged)"
         git tag $NEW_TAG
         git push --tags
     else
-        echo "=== already a tag on this commit"
+        echo "=== SKIPPING: already a tag on this commit"
     fi
 
     # clean up temp directories
