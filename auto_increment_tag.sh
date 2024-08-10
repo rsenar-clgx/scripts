@@ -9,6 +9,9 @@ URL_DBT_PROJECT="git@github.com:rsenar-clgx/ce-std-repo-test.git"
 # =====================================
 if [ $TIER = "dev" ]; then
     DBT_PROJECT=$(echo "$URL_DBT_PROJECT" | cut -d'/' -f2 | cut -d'.' -f1)
+    echo "============================================"
+    echo "=== triggering auto_increment_tag script ==="
+    echo "============================================"
     echo "=== auto increment tag for [$URL_DBT_PROJECT] in [$TIER] environment"
     rm -rf /tmp/$DBT_PROJECT
     git clone --branch $TIER $URL_DBT_PROJECT /tmp/$DBT_PROJECT

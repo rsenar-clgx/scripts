@@ -9,6 +9,9 @@ DBT_PROJECTS_DIR="dags/dbt_projects"
 # =====================================
 # Update DBT project in Airflow Dag Repo
 # =====================================
+echo "======================================================"
+echo "=== triggering auto_update_airflow_dag_repo script ==="
+echo "======================================================"
 DBT_PROJECT=$(echo "$URL_DBT_PROJECT" | cut -d'/' -f2 | cut -d'.' -f1)
 echo "=== get latest tag for [$URL_DBT_PROJECT] in [$TIER] environment"
 rm -rf /tmp/$DBT_PROJECT
