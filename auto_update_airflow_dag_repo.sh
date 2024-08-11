@@ -2,8 +2,8 @@
 # =====================================
 # get TIER from CLGX_ENVIRONMENT enviroment variable
 TIER=$CLGX_ENVIRONMENT
-URL_DBT_PROJECT="git@github.com:rsenar-clgx/ce-std-repo-test.git"
-URL_AIRFLOW_DAGS="git@github.com:rsenar-clgx/airflow-repo-test.git"
+URL_DBT_PROJECT=""git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git""
+URL_AIRFLOW_DAGS="git@github.com:corelogic-private/technology_ops_us-library-airflow_etl_dag_tpl.git"
 DBT_PROJECTS_DIR="dags/dbt_projects"
 
 # =====================================
@@ -36,12 +36,10 @@ DBT_PROJECT_DIR="/tmp/$AIRFLOW_DAGS/$DBT_PROJECTS_DIR/$DBT_PROJECT"
 if [ -d "$DBT_PROJECT_DIR" ]; then
     echo "=== update [$DBT_PROJECTS_DIR/$DBT_PROJECT] project in [$URL_AIRFLOW_DAGS] to [$TAG] tag in [$TIER] environment"
     git subtree pull -m "update $DBT_PROJECT to $TAG in $TIER environment" --prefix=$DBT_PROJECTS_DIR/$DBT_PROJECT $URL_DBT_PROJECT $TAG --squash
-    echo "=== git push origin [$TIER] to [$URL_AIRFLOW_DAGS]"
     git push origin $TIER
 else
     echo "=== add [$DBT_PROJECTS_DIR/$DBT_PROJECT] project to [$URL_AIRFLOW_DAGS] from [$URL_DBT_PROJECT] in [$TIER] environment with [$TAG] tag"
     git subtree add --prefix=$DBT_PROJECTS_DIR/$DBT_PROJECT $URL_DBT_PROJECT $TAG --squash
-    echo "=== git push origin [$TIER] to [$URL_AIRFLOW_DAGS]"
     git push origin $TIER
 fi
 
