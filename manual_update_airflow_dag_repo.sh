@@ -21,6 +21,5 @@ git push origin $TIER
 
 # =====================================
 # clean up temp directories
-rm -rf /tmp/$DBT_PROJECT
 rm -rf /tmp/$AIRFLOW_DAGS
 
