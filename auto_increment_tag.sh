@@ -7,7 +7,7 @@ URL_DBT_PROJECT="git@github.com:corelogic-private/idap_data_pipelines_us-commerc
 # =====================================
 # Auto Increment Git Tag
 # =====================================
-if [ $TIER == "dev" ]; then
+if [ "$TIER" = "dev" ]; then
     echo "======================================"
     echo " triggering auto_increment_tag script "
     echo "======================================"
