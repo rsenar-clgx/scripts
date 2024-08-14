@@ -33,7 +33,7 @@ if [ "$TIER" = "dev" ]; then
     DBT_PROJECT_DIR="/tmp/$AIRFLOW_DAGS/$DBT_PROJECTS_DIR/$DBT_PROJECT"
     if [ -d "$DBT_PROJECT_DIR" ]; then
         echo "=== update [$DBT_PROJECTS_DIR/$DBT_PROJECT] project in [$URL_AIRFLOW_DAGS] to [$TAG] tag in [$TIER] environment"
-        git subtree pull -m "update $DBT_PROJECT to $TAG in $TIER environment" --prefix=$DBT_PROJECTS_DIR/$DBT_PROJECT $URL_DBT_PROJECT $TAG --squash
+        git subtree pull -m "update $DBT_PROJECT to [$TAG] in [$TIER] environment" --prefix=$DBT_PROJECTS_DIR/$DBT_PROJECT $URL_DBT_PROJECT $TAG --squash
         git push origin $TIER
     else
         echo "=== add [$DBT_PROJECTS_DIR/$DBT_PROJECT] project to [$URL_AIRFLOW_DAGS] from [$URL_DBT_PROJECT] in [$TIER] environment with [$TAG] tag"
