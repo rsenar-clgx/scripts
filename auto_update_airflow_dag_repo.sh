@@ -57,12 +57,12 @@ cd $ROOT_DIR/$AIRFLOW_DAGS
 DBT_PROJECT_DIR="$ROOT_DIR/$AIRFLOW_DAGS/$DBT_PROJECTS_DIR/$DBT_PROJECT"
 # check is file exists and is a directory, returns true if exists
 if [ -d "$DBT_PROJECT_DIR" ]; then
-    echo "=== update [$DBT_PROJECTS_DIR/$DBT_PROJECT] project in [$TIER] environment with [$TAG] tag"
-    git subtree pull -m "update [$DBT_PROJECTS_DIR/$DBT_PROJECT] project in [$TIER] environment with [$TAG] tag" --prefix=$DBT_PROJECTS_DIR/$DBT_PROJECT $URL_DBT_PROJECT $TAG --squash
+    echo "=== UPDATE: [$DBT_PROJECTS_DIR/$DBT_PROJECT] dbt project in [$TIER] environment with [$TAG] tag"
+    git subtree pull -m "UPDATE: [$DBT_PROJECTS_DIR/$DBT_PROJECT] dbt project in [$TIER] environment with [$TAG] tag" --prefix=$DBT_PROJECTS_DIR/$DBT_PROJECT $URL_DBT_PROJECT $TAG --squash
     git push origin $TIER
 else
-    echo "=== add [$DBT_PROJECT] project to [$DBT_PROJECTS_DIR] in [$TIER] environment with [$TAG] tag"
-    git subtree add -m "add [$DBT_PROJECT] project to [$DBT_PROJECTS_DIR] in [$TIER] environment with [$TAG] tag" --prefix=$DBT_PROJECTS_DIR/$DBT_PROJECT $URL_DBT_PROJECT $TAG --squash
+    echo "=== ADD: [$DBT_PROJECT] dbt project to [$DBT_PROJECTS_DIR] in [$TIER] environment with [$TAG] tag"
+    git subtree add -m "ADD: [$DBT_PROJECT] dbt project to [$DBT_PROJECTS_DIR] in [$TIER] environment with [$TAG] tag" --prefix=$DBT_PROJECTS_DIR/$DBT_PROJECT $URL_DBT_PROJECT $TAG --squash
     git push origin $TIER
 fi
 
