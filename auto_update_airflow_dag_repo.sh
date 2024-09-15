@@ -12,7 +12,8 @@ URL_AIRFLOW_DAGS="git@github.com:rsenar-clgx/airflow_dags_repo_test.git"
 # =====================================
 # Update DBT project in Airflow Dag Repo
 # =====================================
-# setup SRC_TIER and TIER variables for corresponding tier
+# test operator to setup SRC_TIER and TIER variables for corresponding tier
+# exists if tier value is invalid
 if [ "$TIER" = "dev" ]; then
     SRC_TIER=$TIER
     TIER="develop"
