@@ -3,8 +3,8 @@
 # get TIER from CLGX_ENVIRONMENT enviroment variable
 TIER=$CLGX_ENVIRONMENT
 
-# URL_DBT_PROJECT="git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git"
-URL_DBT_PROJECT="git@github.com:rsenar-clgx/ce_standardization_test.git"
+URL_DBT_PROJECT="git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git"
+# URL_DBT_PROJECT="git@github.com:rsenar-clgx/ce_standardization_test.git"
 
 # =====================================
 # Auto Increment Git Tag

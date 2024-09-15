@@ -4,10 +4,10 @@
 TIER=$CLGX_ENVIRONMENT
 DBT_PROJECTS_DIR="dags/dbt_projects"
 
-# URL_DBT_PROJECT=""git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git""
-URL_DBT_PROJECT="git@github.com:rsenar-clgx/ce_standardization_test.git"
-# URL_AIRFLOW_DAGS="git@github.com:corelogic-private/technology_ops_us-library-airflow_etl_dag_tpl.git"
-URL_AIRFLOW_DAGS="git@github.com:rsenar-clgx/airflow_dags_repo_test.git"
+URL_DBT_PROJECT=""git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git""
+URL_AIRFLOW_DAGS="git@github.com:corelogic-private/technology_ops_us-library-airflow_etl_dag_tpl.git"
+# URL_DBT_PROJECT="git@github.com:rsenar-clgx/ce_standardization_test.git"
+# URL_AIRFLOW_DAGS="git@github.com:rsenar-clgx/airflow_dags_repo_test.git"
 
 
 # =====================================
