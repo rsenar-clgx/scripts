@@ -3,6 +3,7 @@
 # get TIER from CLGX_ENVIRONMENT enviroment variable
 TIER=$CLGX_ENVIRONMENT
 DBT_PROJECTS_DIR="dags/dbt_projects"
+ROOT_DIR="/tmp"
 
 # URL_DBT_PROJECT="git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git"
 # URL_AIRFLOW_DAGS="git@github.com:corelogic-private/technology_ops_us-library-airflow_etl_dag_tpl.git"
@@ -34,10 +35,10 @@ echo "================================================"
 # DBT_PROJECT=idap_data_pipelines_us-commercialprefill-standardization
 DBT_PROJECT=$(echo "$URL_DBT_PROJECT" | cut -d'/' -f2 | cut -d'.' -f1)
 echo "=== get latest tag for [$URL_DBT_PROJECT] in [$SRC_TIER] environment"
-rm -rf /tmp/$DBT_PROJECT
+rm -rf $ROOT_DIR/$DBT_PROJECT
 # e.g. git clone --branch dev git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git /tmp/idap_data_pipelines_us-commercialprefill-standardization
-git clone --branch $SRC_TIER $URL_DBT_PROJECT /tmp/$DBT_PROJECT
-cd /tmp/$DBT_PROJECT
+git clone --branch $SRC_TIER $URL_DBT_PROJECT $ROOT_DIR/$DBT_PROJECT
+cd $ROOT_DIR/$DBT_PROJECT
 # It returns the most recent tag in the current branch's history that matches the pattern
 # e.g. v0.0.9
 TAG=`git describe --abbrev=0 --tags --match="v[0-9]*"`
@@ -48,24 +49,24 @@ echo "=== latest tag: $TAG"
 # e.g. git@github.com:corelogic-private/technology_ops_us-library-airflow_etl_dag_tpl.git
 # AIRFLOW_DAGS=technology_ops_us-library-airflow_etl_dag_tpl
 AIRFLOW_DAGS=$(echo "$URL_AIRFLOW_DAGS" | cut -d'/' -f2 | cut -d'.' -f1)
-rm -rf /tmp/$AIRFLOW_DAGS
+rm -rf $ROOT_DIR/$AIRFLOW_DAGS
 # e.g. git clone --branch dev git@github.com:corelogic-private/technology_ops_us-library-airflow_etl_dag_tpl.git /tmp/technology_ops_us-library-airflow_etl_dag_tpl
-git clone --branch $TIER $URL_AIRFLOW_DAGS /tmp/$AIRFLOW_DAGS
-cd /tmp/$AIRFLOW_DAGS
+git clone --branch $TIER $URL_AIRFLOW_DAGS $ROOT_DIR/$AIRFLOW_DAGS
+cd $ROOT_DIR/$AIRFLOW_DAGS
 
-DBT_PROJECT_DIR="/tmp/$AIRFLOW_DAGS/$DBT_PROJECTS_DIR/$DBT_PROJECT"
+DBT_PROJECT_DIR="$ROOT_DIR/$AIRFLOW_DAGS/$DBT_PROJECTS_DIR/$DBT_PROJECT"
 # check is file exists and is a directory, returns true if exists
 if [ -d "$DBT_PROJECT_DIR" ]; then
     echo "=== update [$DBT_PROJECTS_DIR/$DBT_PROJECT] project in [$URL_AIRFLOW_DAGS] to [$TAG] tag in [$TIER] environment"
-    git subtree pull -m "update $DBT_PROJECT to [$TAG] in [$TIER] environment" --prefix=$DBT_PROJECTS_DIR/$DBT_PROJECT $URL_DBT_PROJECT $TAG --squash
+    git subtree pull -m "update [$DBT_PROJECT] project in [$TIER] environment with [$TAG] tag" --prefix=$DBT_PROJECTS_DIR/$DBT_PROJECT $URL_DBT_PROJECT $TAG --squash
     git push origin $TIER
 else
-    echo "=== add [$DBT_PROJECTS_DIR/$DBT_PROJECT] project to [$URL_AIRFLOW_DAGS] from [$URL_DBT_PROJECT] in [$TIER] environment with [$TAG] tag"
-    git subtree add --prefix=$DBT_PROJECTS_DIR/$DBT_PROJECT $URL_DBT_PROJECT $TAG --squash
+    echo "=== add [$DBT_PROJECT] project to [$AIRFLOW_DAGS/$DBT_PROJECTS_DIR] from [$URL_DBT_PROJECT] in [$TIER] environment with [$TAG] tag"
+    git subtree add -m "add [$DBT_PROJECT] project to [$DBT_PROJECTS_DIR] in [$TIER] environment with [$TAG] tag" --prefix=$DBT_PROJECTS_DIR/$DBT_PROJECT $URL_DBT_PROJECT $TAG --squash
     git push origin $TIER
 fi
 
 # =====================================
 # clean up temp directories
-rm -rf /tmp/$DBT_PROJECT
-rm -rf /tmp/$AIRFLOW_DAGS
+rm -rf $ROOT_DIR/$DBT_PROJECT
+rm -rf $ROOT_DIR/$AIRFLOW_DAGS
