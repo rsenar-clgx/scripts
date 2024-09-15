@@ -27,14 +27,13 @@ git clone --branch $TIER $URL_DBT_PROJECT $ROOT_DIR/$DBT_PROJECT
 cd $ROOT_DIR/$DBT_PROJECT
 
 # It returns the most recent tag in the current branch's history that matches the pattern
-# e.g. v0.0.9
+# e.g. v1.2.3
 VERSION=`git describe --abbrev=0 --tags --match="v[0-9]*"`
 # get semantic version components
-V="v"
-VNUM1=$(echo "$VERSION" | cut -d"." -f1) # v0
-VNUM2=$(echo "$VERSION" | cut -d"." -f2) # 0
-VNUM3=$(echo "$VERSION" | cut -d"." -f3) # 9
-VNUM1=`echo $VNUM1 | sed 's/v//'` # v0 -> 0
+V="v" # prefix
+VNUM1=$(echo "$VERSION" | cut -d"." -f1 | sed 's/v//') # 1
+VNUM2=$(echo "$VERSION" | cut -d"." -f2) # 2
+VNUM3=$(echo "$VERSION" | cut -d"." -f3) # 3
 
 # Check for #major or #minor in commit message prefix and increment the relevant version number
 MAJOR=`git log --format=%B -n 1 HEAD | grep 'major:'` # output: ""
@@ -56,7 +55,7 @@ elif [ "$PATCH" ]; then
 fi
 
 # create new tag
-# e.g. v0.0.10
+# e.g. v1.2.4
 NEW_TAG="$V$VNUM1.$VNUM2.$VNUM3"
 
 # validate NEW_TAG format, overide to default values if invalid format
