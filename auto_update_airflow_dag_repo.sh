@@ -14,7 +14,7 @@ URL_AIRFLOW_DAGS="git@github.com:rsenar-clgx/airflow_dags_repo_test.git"
 # Update DBT project in Airflow Dag Repo
 # =====================================
 # test operator to setup SRC_TIER and TIER variables for corresponding tier
-# exists if tier value is invalid
+# exit if tier value is invalid
 if [ "$TIER" = "dev" ]; then
     SRC_TIER=$TIER
     TIER="develop"
@@ -23,7 +23,7 @@ elif [ "$TIER" = "int" ]; then
 elif [ "$TIER" = "prd" ]; then
     SRC_TIER="int"
 else
-    echo "=== unable to auto_update_airflow_dag_repo, invalid [$TIER] tier..."
+    echo "=== unable to auto update dbt project in airflow dag repo, invalid [$TIER] tier..."
     exit 0
 fi
 

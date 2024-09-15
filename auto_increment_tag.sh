@@ -13,9 +13,9 @@ URL_DBT_PROJECT="git@github.com:rsenar-clgx/ce_standardization_test.git"
 echo "================================================"
 echo " triggering auto_increment_tag script "
 echo "================================================"
-# test operator to trigger script in dev environment only
+# test operator to trigger script if dev environment only
 if [ "$TIER" != "dev" ]; then
-    echo "=== unable to increment git tag on [$TIER] tier..."
+    echo "=== tag auto increment unavailable in [$TIER], enabled ONLY for [dev] tier..."
     exit 0
 fi
 
