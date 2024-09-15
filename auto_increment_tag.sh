@@ -24,7 +24,7 @@ rm -rf /tmp/$DBT_PROJECT
 git clone --branch $TIER $URL_DBT_PROJECT /tmp/$DBT_PROJECT
 cd /tmp/$DBT_PROJECT
 
-# get highest tag number
+# It returns the most recent tag in the current branch's history that matches the pattern
 VERSION=`git describe --abbrev=0 --tags --match="v[0-9]*"`
 V=""
 if [[ $VERSION =~ "v" ]]; then

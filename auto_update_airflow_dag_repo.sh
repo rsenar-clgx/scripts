@@ -33,6 +33,7 @@ echo "=== get latest tag for [$URL_DBT_PROJECT] in [$SRC_TIER] environment"
 rm -rf /tmp/$DBT_PROJECT
 git clone --branch $SRC_TIER $URL_DBT_PROJECT /tmp/$DBT_PROJECT
 cd /tmp/$DBT_PROJECT
+# It returns the most recent tag in the current branch's history that matches the pattern
 TAG=`git describe --abbrev=0 --tags --match="v[0-9]*"`
 echo "=== latest tag: $TAG"
 
