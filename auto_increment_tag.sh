@@ -29,11 +29,8 @@ cd $ROOT_DIR/$DBT_PROJECT
 # It returns the most recent tag in the current branch's history that matches the pattern
 # e.g. v0.0.9
 VERSION=`git describe --abbrev=0 --tags --match="v[0-9]*"`
-V=""
-if [[ $VERSION =~ "v" ]]; then
-    V="v"
-fi
-# get number parts
+# get semantic version components
+V="v"
 VNUM1=$(echo "$VERSION" | cut -d"." -f1) # v0
 VNUM2=$(echo "$VERSION" | cut -d"." -f2) # 0
 VNUM3=$(echo "$VERSION" | cut -d"." -f3) # 9
@@ -62,10 +59,10 @@ fi
 # e.g. v0.0.10
 NEW_TAG="$V$VNUM1.$VNUM2.$VNUM3"
 
-# validate tag format, overide to default tag values when necessary
-if [ $NEW_TAG = "..1" ]; then
+# validate NEW_TAG format, overide to default values if invalid format
+if [ $NEW_TAG = "v..1" ]; then
     NEW_TAG="v0.0.1"
-elif [ $NEW_TAG = ".1.0" ]; then
+elif [ $NEW_TAG = "v.1.0" ]; then
     NEW_TAG="v0.1.0"
 fi
 
