@@ -7,9 +7,6 @@ ROOT_DIR="/tmp"
 # URL_DBT_PROJECT="git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git"
 URL_DBT_PROJECT="git@github.com:rsenar-clgx/ce_standardization_test.git"
 
-# =====================================
-# Auto Increment Git Tag
-# =====================================
 echo "================================================"
 echo " triggering auto_increment_tag script "
 echo "================================================"

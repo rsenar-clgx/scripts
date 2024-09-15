@@ -10,9 +10,9 @@ ROOT_DIR="/tmp"
 URL_DBT_PROJECT="git@github.com:rsenar-clgx/ce_standardization_test.git"
 URL_AIRFLOW_DAGS="git@github.com:rsenar-clgx/airflow_dags_repo_test.git"
 
-# =====================================
-# Update DBT project in Airflow Dag Repo
-# =====================================
+echo "================================================"
+echo " triggering auto_update_airflow_dag_repo script "
+echo "================================================"
 # test operator to setup SRC_TIER and TIER variables for corresponding tier
 # exit if tier value is invalid
 if [ "$TIER" = "dev" ]; then
@@ -27,9 +27,6 @@ else
     exit 0
 fi
 
-echo "================================================"
-echo " triggering auto_update_airflow_dag_repo script "
-echo "================================================"
 # This command extracts the first part of the domain name (the subdomain or the main part of the domain) from the URL_DBT_PROJECT variable
 # e.g. git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git
 # DBT_PROJECT=idap_data_pipelines_us-commercialprefill-standardization
