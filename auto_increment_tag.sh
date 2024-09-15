@@ -11,6 +11,7 @@ URL_DBT_PROJECT="git@github.com:corelogic-private/idap_data_pipelines_us-commerc
 # =====================================
 # run in dev environment only
 if [ "$TIER" != "dev" ]; then
+    echo "=== unable to increment git tag on [$TIER] tier"
     exit 0
 fi
 
