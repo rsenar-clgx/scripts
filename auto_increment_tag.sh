@@ -10,15 +10,15 @@ URL_DBT_PROJECT="git@github.com:rsenar-clgx/ce_standardization_test.git"
 # =====================================
 # Auto Increment Git Tag
 # =====================================
+echo "================================================"
+echo " triggering auto_increment_tag script "
+echo "================================================"
 # test operator to trigger script in dev environment only
 if [ "$TIER" != "dev" ]; then
-    echo "=== unable to increment git tag on [$TIER] tier"
+    echo "=== unable to increment git tag on [$TIER] tier..."
     exit 0
 fi
 
-echo "======================================"
-echo " triggering auto_increment_tag script "
-echo "======================================"
 # This command extracts the first part of the domain name (the subdomain or the main part of the domain) from the URL_DBT_PROJECT variable
 # e.g. git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git
 # DBT_PROJECT=idap_data_pipelines_us-commercialprefill-standardization

@@ -23,7 +23,7 @@ elif [ "$TIER" = "int" ]; then
 elif [ "$TIER" = "prd" ]; then
     SRC_TIER="int"
 else
-    echo "=== unable to auto_update_airflow_dag_repo, invalid [$TIER] tier"
+    echo "=== unable to auto_update_airflow_dag_repo, invalid [$TIER] tier..."
     exit 0
 fi
 
