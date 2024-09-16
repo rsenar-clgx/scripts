@@ -73,7 +73,7 @@ NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 
 # test operator that checks if the string is empty. Returns true if the string has a length of 0 (i.e., it is empty)
 if [ -z "$NEEDS_TAG" ]; then
-    echo "=== updating from [$VERSION] to [$NEW_TAG] in [$TIER] environment (Ignoring fatal:cannot describe - this means commit is untagged)"
+    echo "=== updating from [$VERSION] to [$NEW_TAG] in [$TIER] tier (Ignoring fatal:cannot describe - this means commit is untagged)"
     # generate new tag: v0.0.10
     git tag $NEW_TAG
     git push --tags
