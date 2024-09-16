@@ -12,7 +12,7 @@ echo " triggering auto_increment_tag script "
 echo "================================================"
 # test operator to trigger script if dev environment only
 if [ "$TIER" != "dev" ]; then
-    echo "=== tag auto increment unavailable in [$TIER], enabled ONLY for [dev] tier..."
+    echo "=== tag auto increment unavailable in [$TIER] tier, enabled ONLY in [dev] tier..."
     exit 0
 fi
 
