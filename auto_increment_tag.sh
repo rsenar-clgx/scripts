@@ -20,7 +20,7 @@ fi
 # e.g. git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git
 # DBT_PROJECT=idap_data_pipelines_us-commercialprefill-standardization
 DBT_PROJECT=$(echo "$URL_DBT_PROJECT" | cut -d'/' -f2 | cut -d'.' -f1)
-echo "=== auto increment tag for [$URL_DBT_PROJECT] in [$TIER] environment"
+echo "=== auto increment tag for [$URL_DBT_PROJECT] in [$TIER] tier"
 rm -rf $TEMP_DIR/$DBT_PROJECT
 # e.g. git clone --branch dev git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git /tmp/idap_data_pipelines_us-commercialprefill-standardization
 git clone --branch $TIER $URL_DBT_PROJECT $TEMP_DIR/$DBT_PROJECT
