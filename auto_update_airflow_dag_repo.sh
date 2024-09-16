@@ -38,7 +38,7 @@ git clone --branch $SRC_TIER $URL_DBT_PROJECT $ROOT_DIR/$DBT_PROJECT
 cd $ROOT_DIR/$DBT_PROJECT
 # It returns the most recent tag in the current branch's history that matches the pattern
 # e.g. v0.0.9
-TAG=`git describe --abbrev=0 --tags --match="v[0-9]*"`
+TAG=`git describe --abbrev=0 --tags --match="v[0-9]*" 2>/dev/null`
 echo "=== latest tag: $TAG"
 
 # =====================================

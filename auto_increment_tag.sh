@@ -28,7 +28,7 @@ cd $ROOT_DIR/$DBT_PROJECT
 
 # It returns the most recent tag in the current branch's history that matches the pattern
 # e.g. v1.2.3
-VERSION=`git describe --abbrev=0 --tags --match="v[0-9]*"`
+VERSION=`git describe --abbrev=0 --tags --match="v[0-9]*" 2>/dev/null`
 # get semantic version components
 V="v" # prefix
 VNUM1=$(echo "$VERSION" | cut -d"." -f1 | sed 's/v//') # 1
