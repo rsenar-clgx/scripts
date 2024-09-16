@@ -2,7 +2,7 @@
 # =====================================
 # get TIER from CLGX_ENVIRONMENT enviroment variable
 TIER=$CLGX_ENVIRONMENT
-ROOT_DIR="/tmp"
+TEMP_DIR="/tmp"
 
 # URL_DBT_PROJECT="git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git"
 URL_DBT_PROJECT="git@github.com:rsenar-clgx/ce_standardization_test.git"
@@ -21,10 +21,10 @@ fi
 # DBT_PROJECT=idap_data_pipelines_us-commercialprefill-standardization
 DBT_PROJECT=$(echo "$URL_DBT_PROJECT" | cut -d'/' -f2 | cut -d'.' -f1)
 echo "=== auto increment tag for [$URL_DBT_PROJECT] in [$TIER] environment"
-rm -rf $ROOT_DIR/$DBT_PROJECT
+rm -rf $TEMP_DIR/$DBT_PROJECT
 # e.g. git clone --branch dev git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git /tmp/idap_data_pipelines_us-commercialprefill-standardization
-git clone --branch $TIER $URL_DBT_PROJECT $ROOT_DIR/$DBT_PROJECT
-cd $ROOT_DIR/$DBT_PROJECT
+git clone --branch $TIER $URL_DBT_PROJECT $TEMP_DIR/$DBT_PROJECT
+cd $TEMP_DIR/$DBT_PROJECT
 
 # It returns the most recent tag in the current branch's history that matches the pattern
 # e.g. v1.2.3
@@ -82,4 +82,4 @@ else
 fi
 
 # clean up temp directories
-rm -rf $ROOT_DIR/$DBT_PROJECT
+rm -rf $TEMP_DIR/$DBT_PROJECT

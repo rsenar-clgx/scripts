@@ -3,7 +3,7 @@
 # get TIER from CLGX_ENVIRONMENT enviroment variable
 TIER=$CLGX_ENVIRONMENT
 DBT_PROJECTS_DIR="dags/dbt_projects"
-ROOT_DIR="/tmp"
+TEMP_DIR="/tmp"
 
 # URL_DBT_PROJECT="git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git"
 # URL_AIRFLOW_DAGS="git@github.com:corelogic-private/technology_ops_us-library-airflow_etl_dag_tpl.git"
@@ -32,26 +32,26 @@ fi
 # DBT_PROJECT=idap_data_pipelines_us-commercialprefill-standardization
 DBT_PROJECT=$(echo "$URL_DBT_PROJECT" | cut -d'/' -f2 | cut -d'.' -f1)
 echo "=== get latest tag for [$URL_DBT_PROJECT] in [$SRC_TIER] environment"
-rm -rf $ROOT_DIR/$DBT_PROJECT
+rm -rf $TEMP_DIR/$DBT_PROJECT
 # e.g. git clone --branch dev git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git /tmp/idap_data_pipelines_us-commercialprefill-standardization
-git clone --branch $SRC_TIER $URL_DBT_PROJECT $ROOT_DIR/$DBT_PROJECT
-cd $ROOT_DIR/$DBT_PROJECT
+git clone --branch $SRC_TIER $URL_DBT_PROJECT $TEMP_DIR/$DBT_PROJECT
+cd $TEMP_DIR/$DBT_PROJECT
 # It returns the most recent tag in the current branch's history that matches the pattern
 # e.g. v0.0.9
 TAG=`git describe --abbrev=0 --tags --match="v[0-9]*" 2>/dev/null`
-echo "=== latest tag: $TAG"
+echo "=== latest tag: $TAG from [$SRC_TIER] tier"
 
 # =====================================
 # This command extracts the first part of the domain name (the subdomain or the main part of the domain) from the URL_AIRFLOW_DAGS variable
 # e.g. git@github.com:corelogic-private/technology_ops_us-library-airflow_etl_dag_tpl.git
 # AIRFLOW_DAGS=technology_ops_us-library-airflow_etl_dag_tpl
 AIRFLOW_DAGS=$(echo "$URL_AIRFLOW_DAGS" | cut -d'/' -f2 | cut -d'.' -f1)
-rm -rf $ROOT_DIR/$AIRFLOW_DAGS
+rm -rf $TEMP_DIR/$AIRFLOW_DAGS
 # e.g. git clone --branch dev git@github.com:corelogic-private/technology_ops_us-library-airflow_etl_dag_tpl.git /tmp/technology_ops_us-library-airflow_etl_dag_tpl
-git clone --branch $TIER $URL_AIRFLOW_DAGS $ROOT_DIR/$AIRFLOW_DAGS
-cd $ROOT_DIR/$AIRFLOW_DAGS
+git clone --branch $TIER $URL_AIRFLOW_DAGS $TEMP_DIR/$AIRFLOW_DAGS
+cd $TEMP_DIR/$AIRFLOW_DAGS
 
-DBT_PROJECT_DIR="$ROOT_DIR/$AIRFLOW_DAGS/$DBT_PROJECTS_DIR/$DBT_PROJECT"
+DBT_PROJECT_DIR="$TEMP_DIR/$AIRFLOW_DAGS/$DBT_PROJECTS_DIR/$DBT_PROJECT"
 # check is file exists and is a directory, returns true if exists
 if [ -d "$DBT_PROJECT_DIR" ]; then
     echo "=== UPDATE: [$DBT_PROJECTS_DIR/$DBT_PROJECT] dbt project in [$TIER] environment with [$TAG] tag"
@@ -65,5 +65,5 @@ fi
 
 # =====================================
 # clean up temp directories
-rm -rf $ROOT_DIR/$DBT_PROJECT
-rm -rf $ROOT_DIR/$AIRFLOW_DAGS
+rm -rf $TEMP_DIR/$DBT_PROJECT
+rm -rf $TEMP_DIR/$AIRFLOW_DAGS
