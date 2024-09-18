@@ -51,6 +51,19 @@ rm -rf $TEMP_DIR/$AIRFLOW_DAGS
 git clone --branch $TIER $URL_AIRFLOW_DAGS $TEMP_DIR/$AIRFLOW_DAGS
 cd $TEMP_DIR/$AIRFLOW_DAGS
 
+# sync dbt_project_parser.py file
+if [ "$TIER" = "int" ]; then
+    git checkout origin/develop -- dags/dbt_project_parser.py
+    git commit -am "syncing dags/dbt_project_parser.py from [develop] branch"
+    git push origin $TIER
+    git pull --rebase origin $TIER
+elif [ "$TIER" = "prd" ]; then
+    git checkout origin/int -- dags/dbt_project_parser.py
+    git commit -am "syncing dags/dbt_project_parser.py from [int] branch"
+    git push origin $TIER
+    git pull --rebase origin $TIER
+fi
+
 DBT_PROJECT_DIR="$TEMP_DIR/$AIRFLOW_DAGS/$DBT_PROJECTS_DIR/$DBT_PROJECT"
 # check is file exists and is a directory, returns true if exists
 if [ -d "$DBT_PROJECT_DIR" ]; then
