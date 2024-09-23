@@ -4,8 +4,8 @@
 TIER=$CLGX_ENVIRONMENT
 TEMP_DIR="/tmp"
 
-# URL_DBT_PROJECT="git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git"
-URL_DBT_PROJECT="git@github.com:rsenar-clgx/ce_standardization_test.git"
+URL_DBT_PROJECT="git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git"
+# URL_DBT_PROJECT="git@github.com:rsenar-clgx/ce_standardization_test.git"
 
 echo "================================================"
 echo " triggering auto_increment_tag script "
@@ -21,8 +21,8 @@ fi
 # DBT_PROJECT=idap_data_pipelines_us-commercialprefill-standardization
 DBT_PROJECT=$(echo "$URL_DBT_PROJECT" | cut -d'/' -f2 | cut -d'.' -f1)
 echo "=== auto increment tag for [$URL_DBT_PROJECT] in [$TIER] tier"
-cd $TEMP_DIR
-rm -rf $TEMP_DIR/$DBT_PROJECT
+# clean up
+cd $TEMP_DIR && rm -rf $TEMP_DIR/$DBT_PROJECT
 # e.g. git clone --branch dev git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git /tmp/idap_data_pipelines_us-commercialprefill-standardization
 git clone --branch $TIER $URL_DBT_PROJECT $TEMP_DIR/$DBT_PROJECT
 cd $TEMP_DIR/$DBT_PROJECT
@@ -87,6 +87,5 @@ else
     echo "=== SKIPPING: already a tag on this commit"
 fi
 
-# clean up temp directories
-cd $TEMP_DIR
-rm -rf $TEMP_DIR/$DBT_PROJECT
+# clean up
+cd $TEMP_DIR && rm -rf $TEMP_DIR/$DBT_PROJECT
