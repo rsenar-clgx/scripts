@@ -21,6 +21,7 @@ fi
 # DBT_PROJECT=idap_data_pipelines_us-commercialprefill-standardization
 DBT_PROJECT=$(echo "$URL_DBT_PROJECT" | cut -d'/' -f2 | cut -d'.' -f1)
 echo "=== auto increment tag for [$URL_DBT_PROJECT] in [$TIER] tier"
+cd $TEMP_DIR
 rm -rf $TEMP_DIR/$DBT_PROJECT
 # e.g. git clone --branch dev git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git /tmp/idap_data_pipelines_us-commercialprefill-standardization
 git clone --branch $TIER $URL_DBT_PROJECT $TEMP_DIR/$DBT_PROJECT
@@ -76,10 +77,16 @@ if [ -z "$NEEDS_TAG" ]; then
     echo "=== updating from [$VERSION] to [$NEW_TAG] in [$TIER] tier (Ignoring fatal:cannot describe - this means commit is untagged)"
     # generate new tag: v0.0.10
     git tag $NEW_TAG
+    # update version in deployment_manifest.yml with latest tag
+    yq eval ".$TIER.version = \"$NEW_TAG\"" -i deployment_manifest.yml
+    git commit -am "[CI/CD] update [$TIER] tier version in deployment_manifest.yml to [$NEW_TAG]"
+    echo "=== update [$TIER] tier version in deployment_manifest.yml to [$NEW_TAG]"
+    git push origin $TIER
     git push --tags
 else
     echo "=== SKIPPING: already a tag on this commit"
 fi
 
 # clean up temp directories
+cd $TEMP_DIR
 rm -rf $TEMP_DIR/$DBT_PROJECT
