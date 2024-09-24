@@ -52,7 +52,7 @@ elif [ "$MINOR" ]; then
     VNUM3=0
 # test operator that checks if the string $PATCH is not empty, then increment PATCH value
 elif [ "$PATCH" ]; then
-    VNUM3=$((VNUM3+1)) # e.g. 9 -> 10
+    VNUM3=$((VNUM3+1)) # e.g. 3 -> 4
 fi
 
 # create new tag
@@ -76,9 +76,9 @@ NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 if [ -z "$NEEDS_TAG" ]; then
     # update version in deployment_manifest.yml with latest tag
     yq eval ".$TIER.version = \"$NEW_TAG\"" -i deployment_manifest.yml
-    git commit -am "[CI/CD] update [$TIER] tier version in deployment_manifest.yml to [$NEW_TAG]"
-    echo "=== [CI/CD] update [$TIER] tier version in deployment_manifest.yml to [$NEW_TAG]"
-    # generate and push new tag: v0.0.10
+    git commit -am "[pipeline] update [$TIER] tier version in deployment_manifest.yml to [$NEW_TAG]"
+    echo "=== [pipeline] update [$TIER] tier version in deployment_manifest.yml to [$NEW_TAG]"
+    # generate and push new tag: v1.2.4
     git tag $NEW_TAG
     echo "=== update tag from [$VERSION] to [$NEW_TAG] in [$TIER] tier (Ignoring fatal:cannot describe - this means commit is untagged)"
     git push origin $TIER

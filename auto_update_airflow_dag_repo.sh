@@ -41,13 +41,10 @@ cd $TEMP_DIR && rm -rf $TEMP_DIR/$DBT_PROJECT
 git clone --branch $SRC_TIER $URL_DBT_PROJECT $TEMP_DIR/$DBT_PROJECT
 cd $TEMP_DIR/$DBT_PROJECT
 # It returns the most recent tag in the current branch's history that matches the pattern
-# e.g. v0.0.9
-TAG=`git describe --abbrev=0 --tags --match="v[0-9]*" 2>/dev/null`
-if [[ "$TAG" == *"-pre-release" ]]; then
-  TAG=$(echo "$TAG" | sed 's/-pre-release//')
-else
-  TAG="$TAG"
-fi
+# e.g. v0.0.9, v0.0.9-pre-release or v0.0.9-release
+RAW_TAG=`git describe --abbrev=0 --tags --match="v[0-9]*" 2>/dev/null`
+# remove -pre-release or -release suffix
+TAG=$(echo "$RAW_TAG" | sed 's/-pre-release//' | sed 's/-release//')
 echo "=== latest tag: $TAG from [$SRC_TIER] tier"
 # clean up
 cd $TEMP_DIR && rm -rf $TEMP_DIR/$DBT_PROJECT
@@ -59,8 +56,8 @@ if [ "$TIER" != "develop" ]; then
     git clone --branch $TIER $URL_DBT_PROJECT $TEMP_DIR/$DBT_PROJECT
     cd $TEMP_DIR/$DBT_PROJECT
     yq eval ".$TIER.version = \"$TAG$TAG_SUF\"" -i deployment_manifest.yml
-    git commit -am "[CI/CD] update [$TIER] tier version in deployment_manifest.yml to [$TAG$TAG_SUF]"
-    echo "=== [CI/CD] update [$TIER] tier version in deployment_manifest.yml to [$TAG$TAG_SUF]"
+    git commit -am "[pipeline] update [$TIER] tier version in deployment_manifest.yml to [$TAG$TAG_SUF]"
+    echo "=== [pipeline] update [$TIER] tier version in deployment_manifest.yml to [$TAG$TAG_SUF]"
     git tag $TAG$TAG_SUF
     git push origin $TIER
     git push --tags
