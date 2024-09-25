@@ -78,11 +78,11 @@ cd $TEMP_DIR/$AIRFLOW_DAGS
 
 # sync dbt_project_parser.py file
 if [ "$TIER" = "int" ]; then
-    # git checkout origin/develop -- .gitignore
+    git checkout origin/develop -- .gitignore
     git checkout origin/develop -- dags/dbt_project_parser.py
     git commit -am "syncing dags/dbt_project_parser.py from [develop] branch"
 elif [ "$TIER" = "prd" ]; then
-    # git checkout origin/int -- .gitignore
+    git checkout origin/int -- .gitignore
     git checkout origin/int -- dags/dbt_project_parser.py
     git commit -am "syncing dags/dbt_project_parser.py from [int] branch"
 fi
