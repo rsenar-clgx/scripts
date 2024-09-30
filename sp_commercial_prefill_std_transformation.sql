@@ -187,12 +187,12 @@ SET i=i+1;
 END WHILE;
 
 IF var_source = 'tax' THEN
-    SET sql =  sql || ' FROM stg_property_commercial_prefill.stg_' || var_source || '_pcl_pre_transform as StagingParcel LEFT JOIN stg_property_commercial_prefill.stg_'|| var_source || '_bldg_pre_transform as StagingBuilding on StagingParcel.CLIP=StagingBuilding.CLIP';
+    SET sql = sql || ' FROM stg_property_commercial_prefill.stg_' || var_source || '_pcl_pre_transform AS StagingParcel LEFT JOIN stg_property_commercial_prefill.stg_'|| var_source || '_bldg_pre_transform AS StagingBuilding on StagingParcel.CLIP=StagingBuilding.CLIP';
 ELSE
-    SET sql = sql || ' FROM stg_property_commercial_prefill.stg_' || var_source || '_pre_transform as StagingParcel';
+    SET sql = sql || ' FROM stg_property_commercial_prefill.stg_' || var_source || '_pre_transform AS StagingParcel';
 END IF;
 
-SET create_table = 'create or replace table stg_property_commercial_prefill.stg_' || var_source || '_transform_core as ' || sql;
+SET create_table = 'CREATE OR REPLACE table stg_property_commercial_prefill.stg_' || var_source || '_transform_core AS ' || sql;
 
 EXECUTE IMMEDIATE create_table;
     END
