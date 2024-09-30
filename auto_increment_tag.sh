@@ -4,7 +4,8 @@
 TIER=$CLGX_ENVIRONMENT
 TEMP_DIR="/tmp"
 
-URL_DBT_PROJECT="git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git"
+# URL_DBT_PROJECT="git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git"
+URL_DBT_PROJECT="https://github.com/corelogic-private/idap_data_pipelines_us-commercialprefill-standardization_dbt.git"
 # URL_DBT_PROJECT="git@github.com:rsenar-clgx/ce_standardization_test.git"
 
 echo "================================================"
@@ -19,7 +20,8 @@ fi
 # This command extracts the first part of the domain name (the subdomain or the main part of the domain) from the URL_DBT_PROJECT variable
 # e.g. git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git
 # DBT_PROJECT=idap_data_pipelines_us-commercialprefill-standardization
-DBT_PROJECT=$(echo "$URL_DBT_PROJECT" | cut -d'/' -f2 | cut -d'.' -f1)
+# DBT_PROJECT=$(echo "$URL_DBT_PROJECT" | cut -d'/' -f2 | cut -d'.' -f1)
+DBT_PROJECT=$(echo "$URL_DBT_PROJECT" | sed 's#.*/##; s#\.git##')
 echo "=== auto increment tag for [$URL_DBT_PROJECT] in [$TIER] tier"
 # clean up
 cd $TEMP_DIR && rm -rf $TEMP_DIR/$DBT_PROJECT
