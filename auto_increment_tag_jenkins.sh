@@ -5,7 +5,6 @@ TIER="$CLGX_ENVIRONMENT"
 TEMP_DIR="$WORKSPACE/repos"
 mkdir -p $TEMP_DIR
 
-#URL_DBT_PROJECT="git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git"
 URL_DBT_PROJECT="https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/corelogic-private/idap_data_pipelines_us-commercialprefill-standardization_dbt.git"
 
 echo "================================================"

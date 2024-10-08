@@ -5,10 +5,7 @@ TIER="$CLGX_ENVIRONMENT"
 DBT_PROJECTS_DIR="dags/dbt_projects"
 TEMP_DIR="$WORKSPACE/repos"
 
-#URL_DBT_PROJECT="git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git"
 URL_DBT_PROJECT="https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/corelogic-private/idap_data_pipelines_us-commercialprefill-standardization_dbt.git"
-
-#URL_AIRFLOW_DAGS="git@github.com:corelogic-private/technology_ops_us-library-airflow_etl_dag_tpl.git"
 URL_AIRFLOW_DAGS="https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/corelogic-private/idap_data_pipelines_us-commercialprefill-standardization_dags.git"
 
 echo "================================================"
