@@ -7,12 +7,12 @@ mkdir -p $TEMP_DIR
 
 URL_DBT_PROJECT="https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/corelogic-private/idap_data_pipelines_us-commercialprefill-standardization_dbt.git"
 
-echo "================================================"
+echo "**************************************"
 echo " triggering auto_increment_tag script "
-echo "================================================"
+echo "**************************************"
 # test operator to trigger script if dev environment only
 if [ "$TIER" != "dev" ]; then
-    echo "=== [pipeline] tag auto increment unavailable in [$TIER] tier, enabled ONLY in [dev] tier..."
+    echo "=== [pipeline] SKIPPING: enabled ONLY in [dev] tier..."
     exit 0
 fi
 
@@ -52,6 +52,9 @@ elif [ "$MINOR" ]; then
 # test operator that checks if the string $PATCH is not empty, then increment PATCH value
 elif [ "$PATCH" ]; then
     VNUM3=$((VNUM3+1)) # e.g. 3 -> 4
+else
+    echo "=== SKIPPING: no valid prefix on commit"
+    exit 10
 fi
 
 # create new tag
@@ -74,9 +77,11 @@ NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 # test operator that checks if the string is empty. Returns true if the string has a length of 0 (i.e., it is empty)
 if [ -z "$NEEDS_TAG" ]; then
     # update version in deployment_manifest.yml with latest tag
-    yq eval ".$TIER.version = \"$NEW_TAG\"" -i deployment_manifest.yml
-    git add . && git commit -m "[pipeline] update [$TIER] tier version in deployment_manifest.yml to [$NEW_TAG]"
-    echo "=== [pipeline] update [$TIER] tier version in deployment_manifest.yml to [$NEW_TAG]"
+    if [ $NEW_TAG != "v.." ]; then
+        yq eval ".$TIER.version = \"$NEW_TAG\"" -i deployment_manifest.yml
+        git add . && git commit -m "[pipeline] update [$TIER] tier version in deployment_manifest.yml to [$NEW_TAG]"
+        echo "=== [pipeline] update [$TIER] tier version in deployment_manifest.yml to [$NEW_TAG]"
+    fi
     # generate and push new tag: v1.2.4
     git tag $NEW_TAG
     echo "=== [pipeline] update tag from [$VERSION] to [$NEW_TAG] in [$TIER] tier (Ignoring fatal:cannot describe - this means commit is untagged)"

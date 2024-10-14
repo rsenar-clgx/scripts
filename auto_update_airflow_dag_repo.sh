@@ -36,7 +36,8 @@ fi
 DBT_PROJECT=$(echo "$URL_DBT_PROJECT" | cut -d'/' -f2 | cut -d'.' -f1)
 echo "=== [pipeline] get latest tag for [$URL_DBT_PROJECT] in [$SRC_TIER] environment"
 # clean up
-cd $TEMP_DIR && rm -rf $TEMP_DIR/$DBT_PROJECT
+cd $TEMP_DIR
+rm -rf $TEMP_DIR/$DBT_PROJECT
 # e.g. git clone --branch dev git@github.com:corelogic-private/idap_data_pipelines_us-commercialprefill-standardization.git /tmp/idap_data_pipelines_us-commercialprefill-standardization
 git clone --branch $SRC_TIER $URL_DBT_PROJECT $TEMP_DIR/$DBT_PROJECT
 cd $TEMP_DIR/$DBT_PROJECT
@@ -56,7 +57,7 @@ if [ "$TIER" != "develop" ]; then
     git clone --branch $TIER $URL_DBT_PROJECT $TEMP_DIR/$DBT_PROJECT
     cd $TEMP_DIR/$DBT_PROJECT
     yq eval ".$TIER.version = \"$TAG$TAG_SUF\"" -i deployment_manifest.yml
-    git add . && git git commit -m "[pipeline] update [$TIER] tier version in deployment_manifest.yml to [$TAG$TAG_SUF]"
+    git add . && git commit -m "[pipeline] update [$TIER] tier version in deployment_manifest.yml to [$TAG$TAG_SUF]"
     echo "=== [pipeline] update [$TIER] tier version in deployment_manifest.yml to [$TAG$TAG_SUF]"
     git tag $TAG$TAG_SUF
     git push origin $TIER
@@ -80,11 +81,11 @@ cd $TEMP_DIR/$AIRFLOW_DAGS
 if [ "$TIER" = "int" ]; then
     git checkout origin/develop -- .gitignore
     git checkout origin/develop -- dags/dbt_project_parser.py
-    git add . && git git commit -m "[pipeline] syncing dags/dbt_project_parser.py from [develop] branch"
+    git add . && git commit -m "[pipeline] syncing dags/dbt_project_parser.py from [develop] branch"
 elif [ "$TIER" = "prd" ]; then
     git checkout origin/int -- .gitignore
     git checkout origin/int -- dags/dbt_project_parser.py
-    git add . && git git commit -m "[pipeline] syncing dags/dbt_project_parser.py from [int] branch"
+    git add . && git commit -m "[pipeline] syncing dags/dbt_project_parser.py from [int] branch"
 fi
 
 DBT_PROJECT_DIR="$TEMP_DIR/$AIRFLOW_DAGS/$DBT_PROJECTS_DIR/$DBT_PROJECT"
