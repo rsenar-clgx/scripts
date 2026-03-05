@@ -20,6 +20,9 @@ repos=(
     idap_data_pipelines_us-firmographics-analytics
     idap_data_pipelines_us-firmographics-constructor
     idap_data_pipelines_us-firmographics-standardization
+    idap_data_pipelines_us-panoramiq-gce_config
+    idap_data_pipelines_us-panoramiq-gce_controller
+    idap_data_pipelines_us-panoramiq-gce_dbt
     technology_ops_us-library-airflow_etl_dag_tpl
 )
 
@@ -41,6 +44,3 @@ done
 
 cd "$WORKSPACE"
 
-# idap_data_pipelines_us-panoramiq-gce_config
-# idap_data_pipelines_us-panoramiq-gce_controller
-# idap_data_pipelines_us-panoramiq-gce_dbt
