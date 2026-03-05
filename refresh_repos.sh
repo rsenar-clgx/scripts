@@ -2,7 +2,7 @@
 set -euo pipefail
 
 WORKSPACE=~/workspace
-BRANCHES=(develop dev int preprod prd master)
+BRANCHES=(develop preprod master dev int prd)
 
 repos=(
     idap_data_pipelines_us-commercialprefill-analytics
