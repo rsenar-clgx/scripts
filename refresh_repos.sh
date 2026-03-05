@@ -20,9 +20,6 @@ repos=(
     idap_data_pipelines_us-firmographics-analytics
     idap_data_pipelines_us-firmographics-constructor
     idap_data_pipelines_us-firmographics-standardization
-    idap_data_pipelines_us-panoramiq-gce_config
-    idap_data_pipelines_us-panoramiq-gce_controller
-    idap_data_pipelines_us-panoramiq-gce_dbt
     technology_ops_us-library-airflow_etl_dag_tpl
 )
 
@@ -31,9 +28,11 @@ refresh_repo() {
     echo ">>>>>>>>>>>>>>>>>>>> Refreshing $repo"
     cd "$WORKSPACE/$repo"
     for branch in "${BRANCHES[@]}"; do
-        git co "$branch" && git pull -r
+        if git show-ref --verify --quiet "refs/heads/$branch"; then
+            git co "$branch" && git pull -r
+        fi
     done
-    git co dev
+    git co dev || git co develop
 }
 
 for repo in "${repos[@]}"; do
@@ -41,3 +40,7 @@ for repo in "${repos[@]}"; do
 done
 
 cd "$WORKSPACE"
+
+# idap_data_pipelines_us-panoramiq-gce_config
+# idap_data_pipelines_us-panoramiq-gce_controller
+# idap_data_pipelines_us-panoramiq-gce_dbt
