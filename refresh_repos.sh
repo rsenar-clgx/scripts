@@ -2,7 +2,7 @@
 set -euo pipefail
 
 WORKSPACE=~/workspace
-BRANCHES=(develop preprod master dev int prd)
+BRANCHES=(master prd preprod int develop dev)
 
 repos=(
     idap_data_pipelines_us-commercialprefill-analytics
@@ -35,7 +35,6 @@ refresh_repo() {
             git co "$branch" && git pull -r
         fi
     done
-    git co dev || git co develop
 }
 
 for repo in "${repos[@]}"; do
