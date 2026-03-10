@@ -60,6 +60,12 @@ refresh_repo() {
     while IFS= read -r branch; do
         git co "$branch" && git pull -r
     done < <(git for-each-ref --format='%(refname:short)' refs/heads | sort)
+
+    if git show-ref --verify --quiet refs/heads/develop; then
+        git co develop
+    elif git show-ref --verify --quiet refs/heads/dev; then
+        git co dev
+    fi
 }
 
 for repo in "${repos[@]}"; do
