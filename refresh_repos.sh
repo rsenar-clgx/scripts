@@ -17,7 +17,18 @@ EXCLUDED_DIRS=(
     scripts
     utilities
     idap_data_pipelines_aus-idapanzpipelines-airflow_dag
+    idap_data_pipelines_us-idapdataingestion-airflow_iac
     idap_data_pipelines_us-idapdataingestion-configs
+    idap_data_pipelines_us-naspipeline-datascript
+    idap_data_pipelines_us-onboardingpipelines-cloud_config
+    idap_data_pipelines_us-onboardingpipelines-modelx_edr
+    idap_data_pipelines_us-panoramiq-gce_config
+    idap_data_pipelines_us-panoramiq-gce_controller
+    idap_data_pipelines_us-panoramiq-gce_dbt
+    idap_data_pipelines_us-platformpl-gce_bqloader
+    technology_ops_us-library-pip_airflow_base
+    technology_ops_us-library-pip_sdk_airflow_docker_compose
+    technology_ops_us-library-pip_sdk_core
 )
 
 # -- Helpers --
