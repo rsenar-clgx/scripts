@@ -29,6 +29,8 @@ EXCLUDED_DIRS=(
     technology_ops_us-library-pip_airflow_base
     technology_ops_us-library-pip_sdk_airflow_docker_compose
     technology_ops_us-library-pip_sdk_core
+    technology_ops_us-devaccelerator-mcp_server_promptimus_primes
+    technology_ops_us-devaccelerator-promptimus_primes
 )
 
 # -- Helpers --
