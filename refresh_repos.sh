@@ -36,6 +36,7 @@ EXCLUDED_DIRS=(
 # -- Helpers --
 log()       { printf '\033[33m== [Refreshing] %s\033[0m\n' "$*"; }
 separator() { printf '\033[31m%s\033[0m\n' '================================================================================'; }
+warn()      { printf '\033[35m!! %s\033[0m\n' "$*"; }
 
 is_excluded_dir() {
     local candidate="$1"
@@ -70,14 +71,30 @@ refresh_repo() {
     log "$repo"
     separator
     cd "$WORKSPACE/$repo"
+
+    local original_branch
+    original_branch="$(git rev-parse --abbrev-ref HEAD)"
+
+    local stashed=false
+    if [[ -n "$(git status --porcelain)" ]]; then
+        git stash push -u -m "refresh_repos.sh autostash $(date +%Y%m%d%H%M%S)"
+        stashed=true
+    fi
+
     while IFS= read -r branch; do
-        git co "$branch" && git pull -r
+        if ! git co "$branch" || ! git pull -r; then
+            warn "$repo: pull failed on branch '$branch', aborting rebase and skipping remaining branches"
+            git rebase --abort 2>/dev/null || true
+            break
+        fi
     done < <(git for-each-ref --format='%(refname:short)' refs/heads | sort)
 
-    if git show-ref --verify --quiet refs/heads/develop; then
-        git co develop
-    elif git show-ref --verify --quiet refs/heads/dev; then
-        git co dev
+    git co "$original_branch"
+
+    if [[ "$stashed" == true ]]; then
+        if ! git stash pop; then
+            warn "$repo: stash pop failed, resolve manually (stash left in place)"
+        fi
     fi
 }
 
